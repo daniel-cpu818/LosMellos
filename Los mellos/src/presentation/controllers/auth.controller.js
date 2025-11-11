@@ -1,51 +1,56 @@
-import bcrypt from "bcrypt";
+import { AppDataSource } from "../../config/data-source.js";
+import { User } from "../../models/User.js";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { AppDataSource } from "./../../config/data-source.js";
-import { User } from "./../../models/User.js";
 
-const userRepo = () => AppDataSource.getRepository(User);
+const userRepository = AppDataSource.getRepository(User);
 
-export const register = async (req, res) => {
-  try {
-    const { nombre, email, password, rol } = req.body;
-    if (!nombre || !email || !password) {
-      return res.status(400).json({ error: "Faltan campos requeridos" });
-    }
-
-    const repo = userRepo();
-    const existe = await repo.findOne({ where: { email } });
-    if (existe) return res.status(409).json({ error: "El usuario ya existe" });
-
-    const hashed = await bcrypt.hash(password, 10);
-    const nuevo = repo.create({ nombre, email, password: hashed, rol });
-    await repo.save(nuevo);
-
-    res.status(201).json({ message: "Usuario registrado", id: nuevo.id });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Error al registrar usuario" });
-  }
-};
-
+// 🔹 LOGIN
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const repo = userRepo();
-    const user = await repo.findOne({ where: { email } });
-    if (!user) return res.status(401).json({ error: "Credenciales inválidas" });
+    const user = await userRepository.findOneBy({ email });
 
-    const ok = await bcrypt.compare(password, user.password);
-    if (!ok) return res.status(401).json({ error: "Credenciales inválidas" });
+    if (!user)
+      return res.status(400).json({ message: "Usuario no encontrado" });
 
-    const token = jwt.sign(
-      { sub: user.id, email: user.email, rol: user.rol },
-      process.env.JWT_SECRET || "secreto_dev",
-      { expiresIn: "7d" }
-    );
+    const isValid = await bcrypt.compare(password, user.password);
+    if (!isValid)
+      return res.status(401).json({ message: "Contraseña incorrecta" });
 
-    res.json({ token, user: { id: user.id, nombre: user.nombre, rol: user.rol } });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Error al iniciar sesión" });
+    const token = jwt.sign({ id: user.id, role: user.role }, "secreto", {
+      expiresIn: "1d",
+    });
+
+    res.json({ user, token });
+  } catch (error) {
+    console.error("Error en login:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
+// 🔹 REGISTER
+export const register = async (req, res) => {
+  try {
+    const { username, email, password, role } = req.body;
+
+    const existingUser = await userRepository.findOneBy({ email });
+    if (existingUser)
+      return res.status(400).json({ message: "El correo ya está registrado" });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = userRepository.create({
+      username,
+      email,
+      password: hashedPassword,
+      role: role || "user",
+    });
+
+    await userRepository.save(newUser);
+    res.status(201).json({ message: "Usuario registrado correctamente" });
+  } catch (error) {
+    console.error("Error en register:", error);
+    res.status(500).json({ message: "Error en el servidor" });
   }
 };
