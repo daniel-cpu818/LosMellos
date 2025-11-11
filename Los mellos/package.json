@@ -1,0 +1,48 @@
+{
+  "name": "los-mellos",
+  "version": "1.0.0",
+  "description": "Backend con Node.js, Express, TypeORM y Postgres (JavaScript, ESM)",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "client": "npm start --prefix client",
+    "build": "npm run build --prefix client",
+    "start": "NODE_ENV=production node src/index.js",
+    "lint": "eslint . --ext .js",
+    "db:migrate": "node ./scripts/run-migrations.js"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "ext": "js,json",
+    "exec": "node --enable-source-maps ./src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.15.3",
+    "pg": "^8.16.3",
+    "reflect-metadata": "^0.1.14",
+    "typeorm": "^0.3.27"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.5",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.10.0",
+    "eslint": "^8.44.0",
+    "nodemon": "^2.0.22",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
+  }
+}
