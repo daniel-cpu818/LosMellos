@@ -31,6 +31,7 @@ const Login = () => {
           required
         />
         <input
+        
           type="password"
           placeholder="Contraseña"
           value={password}
