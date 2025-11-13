@@ -1,6 +1,10 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { User } from '../models/User.js';
+import { Order } from '../models/Order.js';
+import { Product as ProductEntity } from '../models/Product.js';
+import { OrderItem } from '../models/OrderItem.js';
+
 import { config } from 'dotenv';
 
 config();
@@ -15,5 +19,5 @@ export const AppDataSource = new DataSource({
   ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
   synchronize: true, // Solo en desarrollo
   logging: false,
-  entities: [User],
+  entities: [User,Order,ProductEntity,OrderItem],
 });

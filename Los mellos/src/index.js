@@ -2,7 +2,8 @@ import express from "express";
 import cors from "cors";
 import { AppDataSource } from "./config/data-source.js";
 import authRoutes from "./presentation/routes/auth.routes.js";
-
+import orderRoutes from "./presentation/routes/createRoute.route.js"; // Asegúrate de tener esta ruta creada
+import productRoutes from "./presentation/routes/productRoutes.js";
 const app = express();
 
 // ✅ Configurar CORS correctamente para permitir el front
@@ -17,7 +18,8 @@ app.use(express.json());
 
 // Rutas
 app.use("/api/auth", authRoutes);
-
+app.use("/api/orders", orderRoutes); // Asegúrate de importar y usar las rutas correctas
+app.use("/api/products", productRoutes);
 // Iniciar base de datos y servidor
 AppDataSource.initialize()
   .then(() => {

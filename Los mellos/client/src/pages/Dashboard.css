@@ -1,0 +1,146 @@
+/* === Contenedor general === */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f4f6f8;
+  font-family: "Poppins", sans-serif;
+}
+
+/* === Sidebar === */
+.sidebar {
+  width: 260px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid #e0e0e0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  transition: all 0.3s ease;
+}
+
+.sidebar-top {
+  padding: 24px;
+}
+
+.brand h1 {
+  font-size: 1.6rem;
+  color: #2563eb;
+  margin-bottom: 5px;
+}
+
+.brand p {
+  color: #6b7280;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 12px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.menu-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  background-color: transparent;
+  color: #374151;
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.menu-btn:hover {
+  background-color: #e5e7eb;
+}
+
+.menu-btn.active {
+  background-color: #2563eb;
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+}
+
+.sidebar-bottom {
+  padding: 16px;
+  font-size: 0.85rem;
+  color: #6b7280;
+  text-align: center;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* === Contenido principal === */
+.main-content {
+  flex: 1;
+  margin-left: 260px;
+  padding: 40px;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+.welcome {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.welcome h2 {
+  font-size: 2rem;
+  color: #111827;
+  margin-bottom: 10px;
+}
+
+.welcome p {
+  color: #4b5563;
+  font-size: 1.1rem;
+}
+
+/* === Responsivo === */
+@media (max-width: 900px) {
+  .sidebar {
+    width: 220px;
+  }
+
+  .main-content {
+    margin-left: 220px;
+    padding: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: absolute;
+    width: 220px;
+    transform: translateX(-100%);
+    z-index: 10;
+  }
+
+  .sidebar.show {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand h1 {
+    font-size: 1.3rem;
+  }
+
+  .menu-btn {
+    font-size: 0.9rem;
+  }
+}

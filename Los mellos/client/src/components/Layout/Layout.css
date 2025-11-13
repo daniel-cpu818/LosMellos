@@ -1,0 +1,69 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f3f4f6;
+  font-family: "Poppins", sans-serif;
+}
+
+/* --- Sidebar --- */
+.layout__sidebar {
+  width: 250px;
+  background-color: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+/* --- Contenido principal --- */
+.layout__content {
+  margin-left: 250px;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 250px);
+}
+
+/* --- Header --- */
+.layout__header {
+  background-color: #2563eb;
+  color: white;
+  padding: 16px 24px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Sección central --- */
+.layout__main {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+/* --- Footer --- */
+.layout__footer {
+  text-align: center;
+  padding: 10px;
+  font-size: 0.9rem;
+  color: #6b7280;
+  border-top: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+}
+
+/* --- Responsivo --- */
+@media (max-width: 768px) {
+  .layout__sidebar {
+    display: none;
+  }
+
+  .layout__content {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .layout__header {
+    text-align: center;
+  }
+}
